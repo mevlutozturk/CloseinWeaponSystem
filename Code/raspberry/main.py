@@ -49,14 +49,10 @@ class detect:
             ret, self.frame = self.videoCapture.read()
             frameHsv = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
             backprojectedFrame = cv2.calcBackProject([frameHsv], [0], roiHist, [0, 180], 1)
-            # Let's mask the dark areas
             mask = cv2.inRange(frameHsv, lowLimit, highLimit)
             backprojectedFrame &= mask
-            # Let's start the mean shift algorithm
             ret, shiftWindow = cv2.meanShift(backprojectedFrame, shiftWindow, terminationCriteria)
-            # Col, row is now mean shift area
             col, row = shiftWindow[:2]
-            # Let's draw the detected area on the image
             self.frame = cv2.rectangle(self.frame, (col, row), (col + w, row + h), (255, 255, 0), 4)
             self.h_axis_pos = col + w/2
             self.v_axis_pos = row + h/2
@@ -69,7 +65,7 @@ class detect:
         return
 
     def show_capture(self):
-        cv2.imshow('autonomous howitzer',self.frame)
+        cv2.imshow('air defence system',self.frame)
         return
 
     def axisControl(self):
