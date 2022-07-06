@@ -8,12 +8,12 @@ import VL53L0X
 
 class detect:
     def __init__(self):
-        self.relay = 16
+        self.weapon_motor = 16
         self.tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
         self.tof.open()
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.relay, GPIO.OUT)
+        GPIO.setup(self.weapon_motor, GPIO.OUT)
         self.videoCapture = cv2.VideoCapture(0)
         self.motor_h = Stepper.stepControl(200,40,38,36,32)
         self.motor_v = Stepper.stepControl(200,37,35,33,23)
@@ -88,9 +88,9 @@ class detect:
         return
     def fire(self):
         if self.distance < 2000:
-            GPIO.OUT(self.relay.HIGH)
+            GPIO.OUT(self.weapon_motor.HIGH)
         if self.distance > 2000:
-            GPIO.OUT(self.relay.LOW)
+            GPIO.OUT(self.weapon_motor.LOW)
             pass
     def tof_return(self):
         self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
