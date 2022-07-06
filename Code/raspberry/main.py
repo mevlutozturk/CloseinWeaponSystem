@@ -112,4 +112,4 @@ if __name__ == '__main__':
         weapon.meanshift()
     except TypeError:
         pass
-    cv2.destroyAllshiftWindowszzz()
+    cv2.destroyAllshiftWindows()
